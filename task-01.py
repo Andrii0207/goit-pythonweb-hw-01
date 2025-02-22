@@ -1,8 +1,15 @@
 from abc import ABC, abstractmethod
+import logging
+
+logging.basicConfig(
+    format="%(asctime)s %(message)s",
+    level=logging.INFO,
+    handlers=[logging.StreamHandler()],
+)
 
 
 class Vehicle(ABC):
-    def __init__(self, make, model, spec):
+    def __init__(self, make: str, model: str, spec: str) -> None:
         self.make = make
         self.model = model
         self.spec = spec
@@ -24,12 +31,12 @@ class VehicleFactory(ABC):
 
 class Car(Vehicle):
     def start_engine(self):
-        print(f"{self.make} {self.model} {self.spec}: Двигун запущено")
+        logging.info(f"{self.make} {self.model} {self.spec}: Двигун запущено")
 
 
 class Motorcycle(Vehicle):
     def start_engine(self):
-        print(f"{self.make} {self.model} {self.spec}: Мотор заведено")
+        logging.info(f"{self.make} {self.model} {self.spec}: Мотор заведено")
 
 
 class USVehicleFactory(VehicleFactory):
@@ -48,14 +55,15 @@ class EUVehicleFactory(VehicleFactory):
         return Motorcycle(make, model, "US Spec")
 
 
-us_factory = USVehicleFactory()
-eu_factory = EUVehicleFactory()
+if __name__ == "__main__":
+    us_factory = USVehicleFactory()
+    eu_factory = EUVehicleFactory()
 
-us_vehicle_1 = us_factory.create_car("Ford", "Mustang")
-us_vehicle_1.start_engine()
+    us_vehicle_1 = us_factory.create_car("Ford", "Mustang")
+    us_vehicle_1.start_engine()
 
-us_vehicle_2 = us_factory.create_motorcycle("Harley-Davidson", "Sportster")
-us_vehicle_2.start_engine()
+    us_vehicle_2 = us_factory.create_motorcycle("Harley-Davidson", "Sportster")
+    us_vehicle_2.start_engine()
 
-eu_vehicle_1 = eu_factory.create_car("Toyota", "Corolla")
-eu_vehicle_1.start_engine()
+    eu_vehicle_1 = eu_factory.create_car("Toyota", "Corolla")
+    eu_vehicle_1.start_engine()

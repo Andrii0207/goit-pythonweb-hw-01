@@ -1,8 +1,15 @@
 from abc import ABC, abstractmethod
+import logging
+
+logging.basicConfig(
+    format="%(asctime)s %(message)s",
+    level=logging.INFO,
+    handlers=[logging.StreamHandler()],
+)
 
 
 class Book:
-    def __init__(self, title, author, year):
+    def __init__(self, title: str, author: str, year: int) -> None:
         self.title = title
         self.author = author
         self.year = year
@@ -31,23 +38,25 @@ class Library(LibraryInterface):
 
     def add_book(self, book: Book):
         self.books.append(book)
-        print(f"Book {book} successfully added")
+        logging.info(f"Book {book} successfully added")
 
     def remove_book(self, title):
         if not self.books:
-            print("Library is empty")
+            logging.info("Library is empty")
         for book in self.books:
             if book.title == title:
                 self.books.remove(book)
-                print(f"Book {book.title} was successfully deleted")
+                logging.info(f"Book {book.title} was successfully deleted")
                 break
 
     def show_books(self):
         if not self.books:
-            print("Library is empty")
+            logging.info("Library is empty")
         else:
             for book in self.books:
-                print(f"Title: {book.title}, Author: {book.author}, Year: {book.year}")
+                logging.info(
+                    f"Title: {book.title}, Author: {book.author}, Year: {book.author}"
+                )
 
 
 class LibraryManager:
