@@ -71,8 +71,11 @@ class LibraryManager:
                 case "add":
                     title = input("Enter book title: ").strip()
                     author = input("Enter book author: ").strip()
-                    year = input("Enter book year: ").strip()
-                    self.library.add_book(Book(title, author, year))
+                    try:
+                        year = int(input("Enter book year: ").strip())
+                        self.library.add_book(Book(title, author, year))
+                    except ValueError:
+                        logging.warning("Invalid year format. Please enter number")
                 case "remove":
                     title = input("Enter book title to remove: ").strip()
                     self.library.remove_book(title)
